@@ -3,55 +3,63 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
-
+import { Menu, X, Home, MessageCircle, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 
 const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Forums", href: "/forums" },
-  { name: "User Chat", href: "/chat" },
-
+  { name: "Home", href: "/", icon: Home },
+  { name: "Forums", href: "/forums", icon: Users },
+  { name: "User Chat", href: "/chat", icon: MessageCircle },
 ];
 
 export function Navbar() {
-  // const user = useUser()
-  // console.log(user.user?.id)
   const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
   const { isSignedIn } = useUser();
 
   return (
-    <nav className="bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between h-16">
-          <div className="flex">
-            <div className="flex-shrink-0 flex items-center">
-              <Link href="/">
-                <Image src="/logo.png" alt="logo" className="rounded-xl " width={100} height={100} />
-              </Link>
-            </div>
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-md font-medium ${
-                    pathname === item.href
-                      ? "border-indigo-500 text-gray-900"
-                      : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
+    <nav className="bg-white shadow-sm sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center">
+            <Link href="/" aria-label="Home" className="flex-shrink-0">
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                className="rounded-2xl"
+                width={100}
+                height={100}
+              />
+            </Link>
           </div>
-          <div className="hidden sm:ml-6 sm:flex sm:items-center">
-            <UserButton afterSignOutUrl="/" />
+          <div className="hidden sm:flex sm:items-center sm:justify-center sm:flex-1">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`inline-flex items-center px-3 py-2 text-sm font-medium transition-colors duration-200 ease-in-out ${
+                  pathname === item.href
+                    ? "text-purple-600"
+                    : "text-gray-500 hover:text-purple-600"
+                }`}
+              >
+                <item.icon className="h-5 w-5 mr-1" aria-hidden="true" />
+                {item.name}
+              </Link>
+            ))}
+          </div>
+          <div className="flex items-center">
+            <UserButton
+              afterSignOutUrl="/"
+              appearance={{
+                elements: {
+                  avatarBox: "h-8 w-8",
+                },
+              }}
+            />
           </div>
           <div className="-mr-2 flex items-center sm:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -59,8 +67,8 @@ export function Navbar() {
                 <Button
                   variant="ghost"
                   className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                  aria-label="Open main menu"
                 >
-                  <span className="sr-only">Open main menu</span>
                   {isOpen ? (
                     <X className="block h-6 w-6" aria-hidden="true" />
                   ) : (
@@ -74,13 +82,14 @@ export function Navbar() {
                     <Link
                       key={item.name}
                       href={item.href}
-                      className={`block pl-3 pr-4 py-2 border-l-4 text-md font-medium ${
+                      className={`flex items-center pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors duration-200 ease-in-out ${
                         pathname === item.href
                           ? "bg-indigo-50 border-indigo-500 text-indigo-700"
                           : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
                       }`}
                       onClick={() => setIsOpen(false)}
                     >
+                      <item.icon className="h-5 w-5 mr-2" aria-hidden="true" />
                       {item.name}
                     </Link>
                   ))}
@@ -90,7 +99,7 @@ export function Navbar() {
                     afterSignOutUrl="/"
                     appearance={{
                       elements: {
-                        userButtonAvatar: "h-8 w-8 rounded-full",
+                        avatarBox: "h-10 w-10",
                       },
                     }}
                   />

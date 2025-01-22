@@ -1,0 +1,37 @@
+/* Override Stream Chat styles */
+.str-chat__theme-light {
+    --str-chat__primary-color: theme("colors.purple.500");
+    --str-chat__active-primary-color: theme("colors.purple.600");
+    --str-chat__secondary-color: theme("colors.gray.500");
+    --str-chat__primary-surface-color: theme("colors.gray.100");
+    --str-chat__border-radius-sm: theme("borderRadius.md");
+    --str-chat__border-radius-md: theme("borderRadius.lg");
+  }
+  
+  .str-chat__message-input {
+    border: 1px solid theme("colors.gray.300");
+    border-radius: theme("borderRadius.lg");
+  }
+  
+  .str-chat__message-input:focus-within {
+    border-color: theme("colors.purple.500");
+    box-shadow: 0 0 0 2px theme("colors.purple.200");
+  }
+  
+  .str-chat__send-button {
+    background-color: theme("colors.purple.500") !important;
+  }
+  
+  .str-chat__send-button:hover {
+    background-color: theme("colors.purple.600") !important;
+  }
+  
+  .str-chat__message-attachment-card {
+    border-radius: theme("borderRadius.md");
+  }
+  
+  .str-chat__avatar {
+    border-radius: theme("borderRadius.full");
+  }
+  
+  

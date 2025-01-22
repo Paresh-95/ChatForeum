@@ -1,6 +1,10 @@
-import React from "react";
-import { ForeumCards } from "@/components/ForeumCards";
+'use client'
+
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
+import { ForeumCards } from "@/components/ForeumCards";
+import { Input } from "@/components/ui/input";
+import { Search } from 'lucide-react';
 
 const topics = [
   {
@@ -61,29 +65,49 @@ const topics = [
   {
     text: "HTML & CSS",
     image: "/html.jpeg",
-    description: "Understand HTML/CSS, frontend devlopment",
+    description: "Understand HTML/CSS, frontend development",
     slug: "Html-Css",
   },
 ];
 
-const Forums = () => {
-  return (
-    <div className="my-8">
-      <h2 className="scroll-m-20 border-b my-10 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-        Discussion Foruems
-      </h2>
+export default function Forums() {
+  const [searchQuery, setSearchQuery] = useState("");
 
-      <div className="flex gap-5 flex-wrap items-center justify-center">
-        {topics.map((topic) => {
-          return (
-            <Link key={topic.text} href={`/forum/${topic.slug}`}>
-              <ForeumCards  topic={topic} />
-            </Link>
-          );
-        })}
+  const filteredTopics = useMemo(() => {
+    return topics.filter(topic => 
+      topic.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      topic.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery]);
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold mb-8 text-center">Discussion Forums</h1>
+      
+      <div className="mb-8">
+        <div className="relative max-w-md mx-auto">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <Input 
+            type="search" 
+            placeholder="Search forums..." 
+            className="pl-10 pr-4 py-2 w-full"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
       </div>
+
+      {filteredTopics.length === 0 ? (
+        <p className="text-center text-gray-500">No forums found matching your search.</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filteredTopics.map((topic) => (
+            <Link key={topic.slug} href={`/forum/${topic.slug}`}>
+              <ForeumCards topic={topic} />
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
-};
-
-export default Forums;
+}
