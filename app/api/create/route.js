@@ -2,20 +2,16 @@ import { NextResponse } from "next/server";
 import { StreamChat } from "stream-chat";
 import { clerkClient } from "@clerk/nextjs/server";
 
-// Define values.
-const api_key = "asnj5w48ew4k";
-const api_secret =
-  "r9jnsdat7xpme53scwp24at4fjy3aqfcrc9g77c7wd6jgchv8h7pq7ecuzw9uj46";
-// const user_id = "user_2rx2j0A0Ulv4coeK2742s4vn5Yb";
 
-// Initialize a Server Client
+const api_key = process.env.NEXT_PUBLIC_STREAM_IO_API_KEY
+const api_secret =process.env.NEXT_PUBLIC_STREAM_IO_API_SECRET 
+ 
 
 export async function POST(request) {
   const serverClient = StreamChat.getInstance(api_key, api_secret);
 
   const user = await request.json();
 
-  // Create User Token
   const token = serverClient.createToken(user.data.id);
   console.log("A New User Created ", user.data.name);
   const client = await clerkClient();
