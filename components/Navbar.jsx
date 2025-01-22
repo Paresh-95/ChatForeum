@@ -18,6 +18,8 @@ const navigation = [
 ];
 
 export function Navbar() {
+  // const user = useUser()
+  // console.log(user.user?.id)
   const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
   const { isSignedIn } = useUser();

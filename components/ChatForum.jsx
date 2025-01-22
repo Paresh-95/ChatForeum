@@ -1,31 +1,25 @@
-"use client";
-import { useState, useEffect } from "react";
-import {
-  useCreateChatClient,
-  Chat,
-  Channel,
-  ChannelHeader,
-  MessageInput,
-  MessageList,
-  Thread,
-  Window,
-} from "stream-chat-react";
+'use client'
 
-import "stream-chat-react/dist/css/v2/index.css";
+import React,{useState,useEffect} from 'react'
+import { useCreateChatClient, Chat, Channel, ChannelHeader, MessageInput, MessageList, Thread, Window } from 'stream-chat-react';
 
-const apiKey = "asnj5w48ew4k";
-const userId = "small-tooth-9";
-const userName = "small";
-const userToken =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoic21hbGwtdG9vdGgtOSIsImV4cCI6MTczNzU4NjM4NH0.ky8yqLm67KwFk_ZngWT2u9Qs4vFhk7uYKqpxvlSC8E0";
+import 'stream-chat-react/dist/css/v2/index.css';
 
-const user = {
-  id: userId,
-  name: userName,
-  image: `https://getstream.io/random_png/?name=${userName}`,
-};
 
-export default function ChatForum() {
+
+const ChatForum = ({clerkUser,slug}) => {
+  const apiKey = 'asnj5w48ew4k';
+  const userId = clerkUser.id
+  const userName = clerkUser.name
+  const userToken = clerkUser.token.token
+
+  const user = {
+    id: userId,
+    name: userName,
+    image: `https://getstream.io/random_png/?name=${userName}`,
+  };
+
+
   const [channel, setChannel] = useState();
   const client = useCreateChatClient({
     apiKey,
@@ -36,13 +30,14 @@ export default function ChatForum() {
   useEffect(() => {
     if (!client) return;
 
-    const channel = client.channel("messaging", "custom_channel_id", {
-      image: "https://getstream.io/random_png/?name=react",
-      name: "Talk about React",
+    const channel = client.channel('messaging', slug, {
+      image: 'https://getstream.io/random_png/?name=react',
+      name: slug+" "+"Discussion",
       members: [userId],
     });
 
     setChannel(channel);
+    
   }, [client]);
 
   if (!client) return <div>Setting up client & connection...</div>;
@@ -60,3 +55,5 @@ export default function ChatForum() {
     </Chat>
   );
 }
+
+export default ChatForum
