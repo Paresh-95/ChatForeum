@@ -29,16 +29,16 @@ export async function POST(request) {
   //give access to this user to all chats
 
   const slugs = [
-    "Java-new",
-    "Javascript-new",
-    "Python-new",
-    "React-new",
-    "Node-new",
-    "Nextjs-new",
-    "SpringBoot-new",
-    "Mongodb-new",
-    "Postgresql-new",
-    "Html-Css-new",
+    "Java",
+    "Javascript",
+    "Python",
+    "React",
+    "Node",
+    "Nextjs",
+    "SpringBoot",
+    "Mongodb",
+    "Postgresql",
+    "Html-Css",
   ];
 
 
