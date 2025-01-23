@@ -1,24 +1,24 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, X, Home, MessageCircle, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { UserButton, useUser } from "@clerk/nextjs";
-import Image from "next/image";
+import * as React from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { Menu, X, Home, MessageCircle, Users } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { UserButton, useUser } from "@clerk/nextjs"
+import Image from "next/image"
 
 const navigation = [
   { name: "Home", href: "/", icon: Home },
   { name: "Forums", href: "/forums", icon: Users },
   { name: "User Chat", href: "/chat", icon: MessageCircle },
-];
+]
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const pathname = usePathname();
-  const { isSignedIn } = useUser();
+  const [isOpen, setIsOpen] = React.useState(false)
+  const pathname = usePathname()
+  const { isSignedIn } = useUser()
 
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
@@ -26,13 +26,7 @@ export function Navbar() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link href="/" aria-label="Home" className="flex-shrink-0">
-              <Image
-                src="/logo.png"
-                alt="Logo"
-                className="rounded-2xl"
-                width={100}
-                height={100}
-              />
+              <Image src="/logo.png" alt="Logo" className="rounded-xl" width={100} height={100} />
             </Link>
           </div>
           <div className="hidden sm:flex sm:items-center sm:justify-center sm:flex-1">
@@ -41,9 +35,7 @@ export function Navbar() {
                 key={item.name}
                 href={item.href}
                 className={`inline-flex items-center px-3 py-2 text-sm font-medium transition-colors duration-200 ease-in-out ${
-                  pathname === item.href
-                    ? "text-purple-600"
-                    : "text-gray-500 hover:text-purple-600"
+                  pathname === item.href ? "text-purple-600" : "text-gray-500 hover:text-purple-600"
                 }`}
               >
                 <item.icon className="h-5 w-5 mr-1" aria-hidden="true" />
@@ -51,17 +43,19 @@ export function Navbar() {
               </Link>
             ))}
           </div>
-          <div className="flex items-center">
-            <UserButton
-              afterSignOutUrl="/"
-              appearance={{
-                elements: {
-                  avatarBox: "h-8 w-8",
-                },
-              }}
-            />
+          <div className="hidden sm:flex sm:items-center">
+            {isSignedIn && (
+              <UserButton
+                afterSignOutUrl="/"
+                appearance={{
+                  elements: {
+                    avatarBox: "h-8 w-8",
+                  },
+                }}
+              />
+            )}
           </div>
-          <div className="-mr-2 flex items-center sm:hidden">
+          <div className="flex items-center sm:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button
@@ -94,21 +88,24 @@ export function Navbar() {
                     </Link>
                   ))}
                 </div>
-                <div className="pt-4 pb-3 border-t border-gray-200">
-                  <UserButton
-                    afterSignOutUrl="/"
-                    appearance={{
-                      elements: {
-                        avatarBox: "h-10 w-10",
-                      },
-                    }}
-                  />
-                </div>
+                {isSignedIn && (
+                  <div className="pt-4 pb-3 border-t border-gray-200">
+                    <UserButton
+                      afterSignOutUrl="/"
+                      appearance={{
+                        elements: {
+                          avatarBox: "h-10 w-10",
+                        },
+                      }}
+                    />
+                  </div>
+                )}
               </SheetContent>
             </Sheet>
           </div>
         </div>
       </div>
     </nav>
-  );
+  )
 }
+

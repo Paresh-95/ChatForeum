@@ -49,41 +49,41 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-white">
           <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-8">Why Choose PieChat?</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-8 text-black">Why Choose PieChat?</h2>
             <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3">
-              <Card className="bg-white dark:bg-gray-700 transition-all duration-200 hover:shadow-lg">
+              <Card className="bg-white transition-all duration-200 hover:shadow-2xl">
                 <CardHeader>
                   <Zap className="w-10 h-10 text-purple-500 mb-2" />
-                  <CardTitle className="text-xl font-semibold">Lightning Fast</CardTitle>
+                  <CardTitle className="text-xl font-semibold  ">Lightning Fast</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="  text-black">
                     Experience chat speeds that'll make your head spin. Our optimized infrastructure ensures minimal
                     latency.
                   </p>
                 </CardContent>
               </Card>
-              <Card className="bg-white dark:bg-gray-700 transition-all duration-200 hover:shadow-lg">
+              <Card className="bg-white transition-all duration-200 hover:shadow-2xl">
                 <CardHeader>
                   <Shield className="w-10 h-10 text-purple-500 mb-2" />
                   <CardTitle className="text-xl font-semibold">Bank-Grade Security</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className=" text-black">
                     Your conversations are locked down tighter than Fort Knox. End-to-end encryption keeps your chats
                     private.
                   </p>
                 </CardContent>
               </Card>
-              <Card className="bg-white dark:bg-gray-700 transition-all duration-200 hover:shadow-lg">
+              <Card className="bg-white transition-all duration-200 hover:shadow-2xl">
                 <CardHeader>
                   <Smile className="w-10 h-10 text-purple-500 mb-2" />
                   <CardTitle className="text-xl font-semibold">Intuitive Design</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-black">
                     So easy to use, even your grandma will love it. Our user-friendly interface makes chatting a breeze
                     for everyone.
                   </p>
@@ -133,7 +133,7 @@ export default function Home() {
         <section className="w-full py-12 md:py-24 lg:py-32 bg-purple-100 dark:bg-purple-900">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Ready to start chatting?</h2>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-white">Ready to start chatting?</h2>
               <p className="max-w-[600px] text-gray-600 md:text-xl dark:text-gray-300">
                 Join thousands of users who are already enjoying PieChat. Sign up now and experience the future of
                 messaging.
