@@ -19,6 +19,7 @@ import "stream-chat-react/dist/css/v2/index.css"
 
 const ChatForum = ({ clerkUser, slug }) => {
   const apiKey = process.env.NEXT_PUBLIC_STREAM_IO_API_KEY 
+  console.log(apiKey)
 
   if (!apiKey) {
     console.error("Stream API key is not set")
@@ -40,6 +41,7 @@ const ChatForum = ({ clerkUser, slug }) => {
     image: `https://getstream.io/random_png/?name=${(userName)}`,
   }
 
+  console.log(user)
   const [channel, setChannel] = useState()
   const [clientError, setClientError] = useState(null)
 

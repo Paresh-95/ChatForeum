@@ -17,7 +17,7 @@ export async function POST(request) {
   const client = await clerkClient();
 
 
-  await serverClient.upsertUser({id:user.data.id})
+  await serverClient.upsertUser({id: user.data.id})
 
 
   await client.users.updateUserMetadata(user.data.id, {
@@ -29,16 +29,16 @@ export async function POST(request) {
   //give access to this user to all chats
 
   const slugs = [
-    "Java",
-    "Javascript",
-    "Python",
-    "React",
-    "Node",
-    "Nextjs",
-    "SpringBoot",
-    "Mongodb",
-    "Postgresql",
-    "Html-Css",
+    "Java-new",
+    "Javascript-new",
+    "Python-new",
+    "React-new",
+    "Node-new",
+    "Nextjs-new",
+    "SpringBoot-new",
+    "Mongodb-new",
+    "Postgresql-new",
+    "Html-Css-new",
   ];
 
 
@@ -50,6 +50,7 @@ export async function POST(request) {
     });
     await channel.create();
     channel.addMembers([user.data.id])
+    console.log(channel)
   })
 
 
