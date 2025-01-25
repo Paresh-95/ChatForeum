@@ -3,6 +3,9 @@ import "./globals.css";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/nextjs";
 import { Navbar } from "@/components/Navbar";
 import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from 'sonner'
+
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +36,7 @@ export default function RootLayout({ children }) {
           <Navbar/>
           <div className="max-w-7xl  mx-auto">
             {children}
+            <Toaster />
           </div>
           </ThemeProvider>
         </body>

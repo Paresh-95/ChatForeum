@@ -4,9 +4,10 @@ import React, { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Loader2, MessageSquare, UserCheck } from "lucide-react"
+import { Loader2, MessageSquare, UserCheck, ArrowLeft } from 'lucide-react'
 import OneToOneChat from "@/components/OneToOneChat"
 import axios from "axios"
+import { toast } from "sonner"
 
 const ChatPage = () => {
   const [userId, setUserId] = useState("")
@@ -17,7 +18,7 @@ const ChatPage = () => {
 
   const authenticateUser = async () => {
     if (!userId) {
-      alert("Please enter your User ID!")
+      toast.error("Please enter your User ID!")
       return
     }
     setIsAuthenticating(true)
@@ -26,12 +27,13 @@ const ChatPage = () => {
 
       if (data.token) {
         setToken(data.token)
+        toast.success("Authentication successful!")
       } else {
-        alert("Authentication failed!")
+        toast.error("Authentication failed!")
       }
     } catch (error) {
       console.log(error)
-      alert(error.response?.data?.message || "An error occurred during authentication.")
+      toast.error(error.response?.data?.message || "An error occurred during authentication.")
     } finally {
       setIsAuthenticating(false)
     }
@@ -39,22 +41,43 @@ const ChatPage = () => {
 
   const initiateChat = () => {
     if (!userId || !recipientId || !token) {
-      alert("Please fill in all fields and authenticate first!")
+      toast.error("Please fill in all fields and authenticate first!")
       return
     }
     setStartChat(true)
   }
 
+  const handleBack = () => {
+    setStartChat(false)
+    setToken("")
+    setRecipientId("")
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-100 to-purple-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold text-center">One-to-One Chat</CardTitle>
+      <div className="w-full max-w-3xl">
+        <Card className="border-2">
+          <CardHeader className="space-y-1">
+            <div className="flex items-center justify-between">
+              {startChat && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={handleBack}
+                  className="h-8 w-8"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                </Button>
+              )}
+              <CardTitle className="text-2xl font-bold text-center flex-1">
+                One-to-One Chat
+              </CardTitle>
+              {startChat && <div className="w-8" />}
+            </div>
           </CardHeader>
           <CardContent>
             {!startChat ? (
-              <div className="space-y-4">
+              <div className="space-y-4 max-w-md mx-auto">
                 <div className="space-y-2">
                   <Input
                     type="text"
@@ -64,7 +87,11 @@ const ChatPage = () => {
                     className="mt-1"
                   />
                 </div>
-                <Button onClick={authenticateUser} className="w-full" disabled={isAuthenticating}>
+                <Button
+                  onClick={authenticateUser}
+                  className="w-full"
+                  disabled={isAuthenticating}
+                >
                   {isAuthenticating ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
