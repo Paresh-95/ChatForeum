@@ -55,7 +55,7 @@ const ChatPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-100 to-purple-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-3xl">
+      <div className="w-full">
         <Card className="border-2">
           <CardHeader className="space-y-1">
             <div className="flex items-center justify-between">
