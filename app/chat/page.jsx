@@ -1,33 +1,107 @@
-import React from "react"
-import { Hourglass } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+"use client"
 
-export default function Chat() {
+import React, { useState } from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Loader2, MessageSquare, UserCheck } from "lucide-react"
+import OneToOneChat from "@/components/OneToOneChat"
+import axios from "axios"
+
+const ChatPage = () => {
+  const [userId, setUserId] = useState("")
+  const [recipientId, setRecipientId] = useState("")
+  const [token, setToken] = useState("")
+  const [startChat, setStartChat] = useState(false)
+  const [isAuthenticating, setIsAuthenticating] = useState(false)
+
+  const authenticateUser = async () => {
+    if (!userId) {
+      alert("Please enter your User ID!")
+      return
+    }
+    setIsAuthenticating(true)
+    try {
+      const { data } = await axios.post("/api/authenticate", { userId })
+
+      if (data.token) {
+        setToken(data.token)
+      } else {
+        alert("Authentication failed!")
+      }
+    } catch (error) {
+      console.log(error)
+      alert(error.response?.data?.message || "An error occurred during authentication.")
+    } finally {
+      setIsAuthenticating(false)
+    }
+  }
+
+  const initiateChat = () => {
+    if (!userId || !recipientId || !token) {
+      alert("Please fill in all fields and authenticate first!")
+      return
+    }
+    setStartChat(true)
+  }
+
   return (
-    <div className="container mx-auto px-4 py-16 flex flex-col items-center justify-center min-h-screen">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center flex items-center justify-center">
-            <Hourglass className="w-6 h-6 mr-2 animate-pulse" />
-            Chat Coming Soon
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-center mb-6">We're working hard to bring you an amazing chat experience. Stay tuned!</p>
-          <div className="space-y-4">
-            <div className="flex items-center justify-center">
-              <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-              <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.15s] mx-2"></div>
-              <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"></div>
-            </div>
-            <p className="text-sm text-gray-500 text-center">Estimated launch: Feb 2025</p>
-          </div>
-        </CardContent>
-        
-      </Card>
+    <div className="min-h-screen bg-gradient-to-r from-blue-100 to-purple-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold text-center">One-to-One Chat</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {!startChat ? (
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Input
+                    type="text"
+                    placeholder="Your User ID"
+                    value={userId}
+                    onChange={(e) => setUserId(e.target.value)}
+                    className="mt-1"
+                  />
+                </div>
+                <Button onClick={authenticateUser} className="w-full" disabled={isAuthenticating}>
+                  {isAuthenticating ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Authenticating...
+                    </>
+                  ) : (
+                    <>
+                      <UserCheck className="mr-2 h-4 w-4" />
+                      Authenticate
+                    </>
+                  )}
+                </Button>
+
+                {token && (
+                  <div className="space-y-2">
+                    <Input
+                      type="text"
+                      placeholder="Recipient's User ID"
+                      value={recipientId}
+                      onChange={(e) => setRecipientId(e.target.value)}
+                      className="mt-1"
+                    />
+                    <Button onClick={initiateChat} className="w-full">
+                      <MessageSquare className="mr-2 h-4 w-4" />
+                      Start Chat
+                    </Button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <OneToOneChat userId={userId} recipientId={recipientId} token={token} />
+            )}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }
 
+export default ChatPage

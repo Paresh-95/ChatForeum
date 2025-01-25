@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X, Home, MessageCircle, Users } from "lucide-react"
+import { Menu, X, Home, MessageCircle, Users, User } from "lucide-react" // Add User icon
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { UserButton, useUser } from "@clerk/nextjs"
@@ -13,6 +13,7 @@ const navigation = [
   { name: "Home", href: "/", icon: Home },
   { name: "Forums", href: "/forums", icon: Users },
   { name: "User Chat", href: "/chat", icon: MessageCircle },
+  { name: "Share User ID", href: "/share-userid", icon: User }, // Add the Share User ID link
 ]
 
 export function Navbar() {
@@ -108,4 +109,3 @@ export function Navbar() {
     </nav>
   )
 }
-
